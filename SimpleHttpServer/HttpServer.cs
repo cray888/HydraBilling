@@ -22,11 +22,11 @@ namespace SimpleHttpServer
         private TcpListener Listener;
         private HttpProcessor Processor;
         private bool IsActive = true;
+        public string error;
 
         #endregion
 
-        private static readonly ILog log = LogManager.GetLogger(typeof(HttpServer));
-        public string error;
+        private static readonly ILog log = LogManager.GetLogger(typeof(HttpServer));        
 
         #region Public Methods
         public HttpServer(int port, List<Route> routes)
@@ -63,6 +63,11 @@ namespace SimpleHttpServer
                 thread.Start();
                 Thread.Sleep(1);
             }
+        }
+
+        public void Stop()
+        {
+            this.IsActive = false;
         }
 
         #endregion

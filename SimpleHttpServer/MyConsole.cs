@@ -10,18 +10,20 @@ namespace SimpleHttpServer
     {
         static public void Info(string text)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write(DateTime.Now + " INF - ");
-            Console.ResetColor();
-            Console.WriteLine(text);
+            WriteConsole("INF", text, ConsoleColor.Green);
         }
 
         static public void Error(string text)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(DateTime.Now + " ERR - ");
-            Console.ResetColor(); 
-            Console.WriteLine(text);
+            WriteConsole("ERR", text, ConsoleColor.Red);
+        }
+
+        static private void WriteConsole(string prefix, string text, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.Write(String.Format("{0} {1}", DateTime.Now, prefix));
+            Console.ResetColor();
+            Console.WriteLine(String.Format(" - {0}", text));
         }
     }
 }

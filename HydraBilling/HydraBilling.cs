@@ -67,6 +67,7 @@ namespace HydraBilling
 
             public string Put(int UserID, string text)
             {
+                conn.Open();
                 OracleCommand cmd = HydraBilling.GetOracleCommand("SI_SUBJECTS_PKG.SI_SUBJ_COMMENTS_PUT", conn);
                 cmd.Parameters.Add("num_N_LINE_ID", OracleDbType.Int32);
                 cmd.Parameters["num_N_LINE_ID"].Direction = ParameterDirection.InputOutput;
@@ -74,6 +75,7 @@ namespace HydraBilling
                 cmd.Parameters.Add("num_N_SUBJECT_ID", OracleDbType.Int32, UserID, ParameterDirection.Input);
                 cmd.Parameters.Add("clb_CL_COMMENT", OracleDbType.Clob, text, ParameterDirection.Input);
                 cmd.ExecuteNonQuery();
+                conn.Close();
 
                 return new Result().GetResultString("OK", "", int.Parse(cmd.Parameters["num_N_LINE_ID"].Value.ToString()));
             }

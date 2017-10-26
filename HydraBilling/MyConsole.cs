@@ -11,16 +11,18 @@ namespace HydraBilling
         static public void Info(string text)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write(DateTime.Now + " INF - ");
+            Console.Write(DateTime.Now + " INF");
             Console.ResetColor();
+            Console.Write(" - ");
             Console.WriteLine(text);
         }
 
         static public void Error(string text)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(DateTime.Now + " ERR - ");
-            Console.ResetColor(); 
+            Console.Write(DateTime.Now + " ERR");
+            Console.ResetColor();
+            Console.Write(" - ");
             Console.WriteLine(text);
         }
     }

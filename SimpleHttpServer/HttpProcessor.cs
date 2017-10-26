@@ -76,11 +76,20 @@ namespace SimpleHttpServer
 
             response.Headers["Content-Length"] = response.Content.Length.ToString();
 
-            Write(stream, string.Format("HTTP/1.0 {0} {1}\r\n",response.StatusCode,response.ReasonPhrase));
-            Write(stream, string.Join("\r\n", response.Headers.Select(x => string.Format("{0}: {1}", x.Key, x.Value))));
-            Write(stream, "\r\n\r\n");
+            try
+            {
+                Write(stream, string.Format("HTTP/1.0 {0} {1}\r\n",response.StatusCode,response.ReasonPhrase));
+                Write(stream, string.Join("\r\n", response.Headers.Select(x => string.Format("{0}: {1}", x.Key, x.Value))));
+                Write(stream, "\r\n\r\n");
 
-            stream.Write(response.Content, 0, response.Content.Length);       
+                stream.Write(response.Content, 0, response.Content.Length);
+            }
+            catch (Exception ex)
+            {
+
+                MyConsole.Error(ex.Message);
+            }
+                   
         }
 
         public void AddRoute(Route route)
@@ -216,7 +225,7 @@ namespace SimpleHttpServer
                     bytesLeft -= n;
                 }
 
-                content = Encoding.ASCII.GetString(bytes);
+                content = Encoding.UTF8.GetString(bytes);
             }
 
 
@@ -230,7 +239,6 @@ namespace SimpleHttpServer
         }
 
         #endregion
-
 
     }
 }
