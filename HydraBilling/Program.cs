@@ -23,13 +23,15 @@ namespace HydraBilling
     {
         static void Main(string[] args)
         {
+            //Переменные программы
             int webServerPort = 8081;
-            string oracleHost = "46.101.123.246";
+            string oracleHost = "";
             int oraclePort = 1521;
             string oracleSid = "hydra";
             string oracleUser = "AIS_RPC";
-            string oraclePassword = "TcNzS2bfxwyVc";
+            string oraclePassword = "";
 
+            //Переменный класса
             OracleConnection conn;
             HttpServer httpServer;
             Thread threadWD;
@@ -53,7 +55,6 @@ namespace HydraBilling
             };
 
             conn = DBUtils.GetDBConnection(oracleHost, oraclePort, oracleSid, oracleUser, oraclePassword);
-            //conn.StateChange += Conn_StateChange;
             MyConsole.Info("Oracle: get connection: " + conn);
             try
             {
@@ -71,10 +72,6 @@ namespace HydraBilling
                 Console.Read();
                 return;
             }
-
-            DBWatchDog dbWatchDog = new DBWatchDog(conn);
-            threadWD = new Thread(new ThreadStart(dbWatchDog.Process));
-            //threadWD.Start();
             
             MyConsole.Info("Web server: starting");
             httpServer = new HttpServer(webServerPort, route_config);
@@ -128,7 +125,8 @@ namespace HydraBilling
                         Console.WriteLine("MngId:" + mngId);
                     }
                 }
-            }
+            }*/
+            /*conn.Open();
             using (DbDataReader dbReader = DBOracleUtils.OracleQuery("select VC_SUBJ_NAME from SI_V_USERS", conn))
             {
                 while (dbReader.Read())
@@ -137,7 +135,8 @@ namespace HydraBilling
                     string empName = dbReader.GetString(empNameIndex);
                     Console.WriteLine("VC_SUBJ_NAME:" + empName);
                 }
-            }*/
+            }
+            conn.Close();*/
         }
 
         private static void Conn_StateChange(object sender, StateChangeEventArgs e)
